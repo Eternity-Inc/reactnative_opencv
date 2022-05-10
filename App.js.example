@@ -1,0 +1,44 @@
+import React from 'react';
+import {LogBox} from 'react-native';
+
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+
+import {GlobalProvider} from './src/store/globalStore.js';
+
+import {HomeScreen} from './src/screens/HomeScreen';
+import {SubScreens} from './src/screens/MainSubScreens';
+
+// LogBox.ignoreLogs(['Warning: ...']);
+LogBox.ignoreLogs([
+  "[react-native-gesture-handler] Seems like you're using an old API with gesture components, check out new Gestures system!",
+]);
+
+const RootStack = createStackNavigator();
+
+export default class App extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <GlobalProvider>
+        <NavigationContainer>
+          <RootStack.Navigator initialRouteName="Home">
+            <RootStack.Screen
+              name="Home"
+              component={HomeScreen}
+              options={{headerShown: false}}
+            />
+            <RootStack.Screen
+              name="SubsScreen"
+              component={SubScreens}
+              options={{headerShown: false}}
+            />
+          </RootStack.Navigator>
+        </NavigationContainer>
+      </GlobalProvider>
+    );
+  }
+}
